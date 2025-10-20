@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DAM-AD-25-26/AD-ud0-introduccion/AD-ud0-introduccion.iml" filepath="$PROJECT_DIR$/DAM-AD-25-26/AD-ud0-introduccion/AD-ud0-introduccion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DAM-AD-25-26/AD-ud1-Ficheros/AD-ud1-Ficheros.iml" filepath="$PROJECT_DIR$/DAM-AD-25-26/AD-ud1-Ficheros/AD-ud1-Ficheros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DAM-AD-25-26/EjemploUD1_comida/EjemploUD1_comida.iml" filepath="$PROJECT_DIR$/DAM-AD-25-26/EjemploUD1_comida/EjemploUD1_comida.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DAM-AD-25-26/EjemploUD1_sinService/EjemploUD1_sinService.iml" filepath="$PROJECT_DIR$/DAM-AD-25-26/EjemploUD1_sinService/EjemploUD1_sinService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Proyecto entregable.iml" filepath="$PROJECT_DIR$/.idea/Proyecto entregable.iml" />
+      <module fileurl="file://$PROJECT_DIR$/miProyectoEntregable/miProyectoEntregable.iml" filepath="$PROJECT_DIR$/miProyectoEntregable/miProyectoEntregable.iml" />
+    </modules>
+  </component>
+</project>
