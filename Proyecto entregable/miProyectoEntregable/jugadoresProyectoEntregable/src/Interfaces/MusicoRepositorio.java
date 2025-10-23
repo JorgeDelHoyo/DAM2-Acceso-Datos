@@ -1,6 +1,6 @@
-package Repository;
+package Interfaces;
 
-import Model.Musico;
+import Objetos.Musico;
 
 import java.io.IOException;
 import java.util.List;
