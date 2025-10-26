@@ -23,4 +23,12 @@ public class Banda implements Serializable {
     public String getNombreBanda(){return nombreBanda;}
 
     public void setNombreBanda(String nombreBanda){this.nombreBanda = nombreBanda;}
+
+    @Override
+    public String toString() {
+        return "Banda{" +
+                "idBanda=" + idBanda +
+                ", nombreBanda='" + nombreBanda + '\'' +
+                '}';
+    }
 }

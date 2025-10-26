@@ -1,12 +1,14 @@
 package Objetos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Musico implements Serializable {
     private int idMusico; // ID del músico
     private String nombre; // Nombre del músico
     private String instrumento; // Instrumento del músico
-    private int idBanda; // ID de la banda en la que toca
+    private List<Banda> bandas = new ArrayList<>();
 
     /**
      * Constructor Vacio
@@ -20,13 +22,11 @@ public class Musico implements Serializable {
      * @param idMusico
      * @param nombre
      * @param instrumento
-     * @param idBanda
      */
-    public Musico(int idMusico,String nombre, String instrumento, int idBanda){
+    public Musico(int idMusico,String nombre, String instrumento){
         this.idMusico = idMusico;
         this.nombre = nombre;
         this.instrumento = instrumento;
-        this.idBanda = idBanda;
     }
 
     public int getIdMusico(){return idMusico;}
@@ -41,17 +41,20 @@ public class Musico implements Serializable {
 
     public void setInstrumento(String instrumento){this.instrumento = instrumento;}
 
-    public int getIdBanda(){return idBanda;}
-
-    public void setIdBanda(int idBanda){this.idBanda = idBanda;}
+    public List<Banda> getBandas(){return bandas;}
+    public void setBandas(List<Banda> bandas){this.bandas = bandas;}
 
     @Override
     public String toString() {
-        return "Musico{" +
-                "ID: " + idMusico +
-                ", Nombre: '" + nombre + '\'' +
-                ", Instrumento: '" + instrumento + '\'' +
-                ", ID Banda: " + idBanda +
-                '}';
+        StringBuilder sb = new StringBuilder("Alumno{" +
+                "id='" + idMusico + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", instrumento='" + instrumento + '\'' +
+                ", bandas=[");
+        for (Banda b : bandas) {
+            sb.append("\n    ").append(b);
+        }
+        sb.append("\n]}");
+        return sb.toString();
     }
 }
