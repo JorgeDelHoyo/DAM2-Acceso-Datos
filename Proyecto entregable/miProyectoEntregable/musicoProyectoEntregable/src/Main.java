@@ -2,6 +2,9 @@
 import ConfiguracionMusico.MusicoConfig;
 import Menus.MenuOpciones;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("=====================================");
@@ -10,7 +13,7 @@ public class Main {
 
         try {
             // Inicializa la configuración de músicos (selecciona repositorio automáticamente)
-            MusicoConfig config = new MusicoConfig();
+            MusicoConfig config = new MusicoConfig("dat", "data/musicos.dat");
 
             System.out.println("Repositorio cargado: " + config.getRuta());
 

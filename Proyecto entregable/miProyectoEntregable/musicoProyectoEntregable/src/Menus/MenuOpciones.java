@@ -17,6 +17,9 @@ public class MenuOpciones{
         this.service = service;
     }
 
+    /**
+     * Metodo para mostrar y realizar un menu interactivo
+     */
     public void mostrarMenu() {
         boolean salir = false;
         while (!salir) {
@@ -56,13 +59,18 @@ public class MenuOpciones{
         }
     }
 
-    // Ahora los métodos usan service.listar(), service.agregar(), etc.
+    /**
+     * Metodo para listar musicos
+     */
     private void listar() {
         List<Musico> lista = service.listar();
         if (lista.isEmpty()) System.out.println("No hay músicos.");
         else lista.forEach(System.out::println);
     }
 
+    /**
+     * Metodo para crear un musico
+     */
     private void crearMusico() {
         try {
             System.out.print("ID: ");
@@ -79,6 +87,9 @@ public class MenuOpciones{
         }
     }
 
+    /**
+     * Metodo para agregar una banda a un musico
+     */
     private void agregarBanda() {
         try {
             System.out.print("ID del músico: ");
@@ -101,6 +112,9 @@ public class MenuOpciones{
         }
     }
 
+    /**
+     * Metodo para eliminar un musico
+     */
     private void eliminar() {
         try {
             System.out.print("ID del músico a eliminar: ");
@@ -111,4 +125,5 @@ public class MenuOpciones{
             System.out.println("Formato incorrecto.");
         }
     }
+
 }

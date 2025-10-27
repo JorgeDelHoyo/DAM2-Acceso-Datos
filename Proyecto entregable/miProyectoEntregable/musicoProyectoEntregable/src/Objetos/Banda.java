@@ -4,18 +4,25 @@ import java.io.Serializable;
 
 public class Banda implements Serializable {
 
-    private int idBanda;
-    private String nombreBanda;
+    private int idBanda; // ID de la banda
+    private String nombreBanda; // Nombre de la banda
 
-    public Banda(){
+    /**
+     * Constructor vacio
+     */
+    public Banda(){}
 
-    }
-
+    /**
+     * Constructor con parámetros
+     * @param idBanda
+     * @param nombreBanda
+     */
     public Banda(int idBanda, String nombreBanda){
         this.idBanda = idBanda;
         this.nombreBanda = nombreBanda;
     }
 
+    // GETTER Y SETTERS //
     public int getIdBanda(){return idBanda;}
 
     public void setIdBanda(int idBanda){this.idBanda = idBanda;}
@@ -24,11 +31,17 @@ public class Banda implements Serializable {
 
     public void setNombreBanda(String nombreBanda){this.nombreBanda = nombreBanda;}
 
+    // GETTER Y SETTERS //
+
+    /**
+     * Metodo para mostrar los datos de una banda
+     * @return
+     */
     @Override
     public String toString() {
         return "Banda{" +
-                "idBanda=" + idBanda +
-                ", nombreBanda='" + nombreBanda + '\'' +
+                "IDBanda: " + idBanda +
+                ", NombreBanda: '" + nombreBanda + '\'' +
                 '}';
     }
 }

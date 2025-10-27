@@ -7,7 +7,11 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-
+/**
+ * Clase FicheroBinario
+ * Implementa la interfaz MusicoRepositorio para guardar y cargar músicos en formato binario.
+ * Cada músico puede tener varias bandas
+ */
 public class FicheroBinario implements MusicoRepositorio {
 
     // Ruta del archivo binario donde se guardarán o cargarán los musicos

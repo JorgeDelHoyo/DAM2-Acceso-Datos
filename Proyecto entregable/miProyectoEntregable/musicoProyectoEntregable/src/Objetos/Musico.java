@@ -13,9 +13,7 @@ public class Musico implements Serializable {
     /**
      * Constructor Vacio
      */
-    public Musico(){
-
-    }
+    public Musico(){}
 
     /**
      * Constructor con parámetros
@@ -29,6 +27,7 @@ public class Musico implements Serializable {
         this.instrumento = instrumento;
     }
 
+    // GETTER Y SETTERS //
     public int getIdMusico(){return idMusico;}
 
     public void setIdMusico(int idMusico){this.idMusico = idMusico;}
@@ -42,15 +41,22 @@ public class Musico implements Serializable {
     public void setInstrumento(String instrumento){this.instrumento = instrumento;}
 
     public List<Banda> getBandas(){return bandas;}
+
     public void setBandas(List<Banda> bandas){this.bandas = bandas;}
 
+    // GETTER Y SETTERS //
+
+    /**
+     * Metodo para mostrar los datos de una banda
+     * @return
+     */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Alumno{" +
-                "id='" + idMusico + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", instrumento='" + instrumento + '\'' +
-                ", bandas=[");
+        StringBuilder sb = new StringBuilder("Musico{" +
+                "ID: '" + idMusico + '\'' +
+                ", Nombre: '" + nombre + '\'' +
+                ", Instrumento: '" + instrumento + '\'' +
+                ", Bandas[");
         for (Banda b : bandas) {
             sb.append("\n    ").append(b);
         }
