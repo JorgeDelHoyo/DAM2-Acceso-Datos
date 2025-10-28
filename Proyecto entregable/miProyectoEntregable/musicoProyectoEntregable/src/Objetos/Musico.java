@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Musico implements Serializable {
+
     private int idMusico; // ID del músico
     private String nombre; // Nombre del músico
     private String instrumento; // Instrumento del músico
