@@ -20,7 +20,7 @@ public class FicheroBinario {
                 listaProductos.add(p);
             }
         }catch (IOException  | ClassNotFoundException cnf){
-            cnf.printStackTrace();
+            System.out.println(cnf.getMessage());
         }finally {
             if(ois != null){
                 ois.close();
@@ -43,7 +43,7 @@ public class FicheroBinario {
                 oos.writeObject(p);
             }
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }finally {
             if(oos != null){
                 oos.close();
@@ -51,26 +51,26 @@ public class FicheroBinario {
         }
     }
 
-    public List<Alumno> leerBinarioAlumno(String ruta) throws IOException {
-        List<Alumno> lista = new ArrayList<>();
+    public List<Alumno> leerBinarioAlumno(String ruta)throws IOException{
+        List<Alumno> listaAlumnos = new ArrayList<>();
         ObjectInputStream ois = null;
         try{
             ois = new ObjectInputStream(new FileInputStream(ruta));
             while(true){
                 Alumno a = (Alumno) ois.readObject();
-                lista.add(a);
+                listaAlumnos.add(a);
             }
         }catch (IOException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }finally {
-            if (ois != null) {
+            if(ois != null){
                 ois.close();
             }
         }
-        return lista;
+        return listaAlumnos;
     }
 
-    public void escribirBinarioAlumno(List<Alumno>lista, String ruta) throws IOException{
+    public void escribirBinarioAlumno(List<Alumno> lista,String ruta)throws IOException{
         ObjectOutputStream oos = null;
         try{
             oos = new ObjectOutputStream(new FileOutputStream(ruta));
@@ -80,7 +80,7 @@ public class FicheroBinario {
         }catch (IOException e){
             System.out.println(e.getMessage());
         }finally {
-            if(oos != null) {
+            if(oos != null){
                 oos.close();
             }
         }

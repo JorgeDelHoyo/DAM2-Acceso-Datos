@@ -6,6 +6,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,72 @@ public class FicheroXML {
 
                 lista.add(new Producto(id, nombre, precio));
             }
+        }
+        return lista;
+    }
+
+    public void escribirXMLAlumno(List<Alumno>lista, String ruta)throws Exception{
+        try{
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.newDocument();
+
+            Element root = doc.createElement("alumnos");
+            doc.appendChild(root);
+
+            for(Alumno a : lista){
+                Element alumnoElement = doc.createElement("alumno");
+
+                alumnoElement.setAttribute("id",String.valueOf(a.getIdAlumno()));
+
+                Element nombre = doc.createElement("nombre");
+                nombre.setTextContent(a.getNombreAlumno());
+                alumnoElement.appendChild(nombre);
+
+                Element nota = doc.createElement("nota");
+                nota.setTextContent(String.valueOf(a.getNotaAlumno()));
+                alumnoElement.appendChild(nota);
+
+                root.appendChild(alumnoElement);
+            }
+
+            // Guarda el documento XML en un archivo
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT,"yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(ruta));
+            transformer.transform(source, result);
+
+            System.out.println("XML creado correctamente");
+        }catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
+        }
+    }
+
+    public List<Alumno> leerXMLAlumno(String ruta)throws Exception{
+        List<Alumno> lista = new ArrayList<>();
+        try{
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(ruta));
+            doc.getDocumentElement().normalize();
+
+            NodeList nodos = doc.getElementsByTagName("alumno");
+
+            for(int i = 0; i < nodos.getLength(); i++){
+                Node nodo = nodos.item(i);
+                if(nodo.getNodeType() == Node.ELEMENT_NODE){
+                    Element elem = (Element) nodo;
+                    int id = Integer.parseInt(elem.getAttribute("id"));
+                    String nombre = elem.getElementsByTagName("nombre").item(0).getTextContent();
+                    double nota = Double.parseDouble(elem.getElementsByTagName("nota").item(0).getTextContent());
+
+                    lista.add(new Alumno(id, nombre, nota));
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
         }
         return lista;
     }

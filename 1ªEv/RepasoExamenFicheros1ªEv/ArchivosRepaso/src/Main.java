@@ -18,17 +18,20 @@ public class Main {
         //bin.escribirBinario(lista, "productos.dat");
         //rafFile.escribirAleatorio(lista, "productos.raf");
 
-        //List<Alumno> listaAlumnos = csv.leerCSVAlumno("Alumnos.csv");
+        List<Alumno> listaAlumnos = xml.leerXMLAlumno("alumnos.xml");
+        //xml.escribirXMLAlumno(listaAlumnos,"alumnos.xml");
+        //bin.escribirBinarioAlumno(listaAlumnos,"alumnosEscrito.dat");
         //csv.escribirCSVAlumno(listaAlumnos, "alumnos2.csv");
-       // bin.escribirBinarioAlumno(listaAlumnos, "alumnos.dat");
+        //bin.escribirBinarioAlumno(listaAlumnos, "alumnos.dat");
         //rafFile.escribirAleatorioAlumno(listaAlumnos, "alumnos.raf");
 
 
-        List<Alumno> alumnos = rafFile.leerAleatorioAlumno("alumnos.raf");
+        //List<Alumno> alumnos = rafFile.leerAleatorioAlumnosAPartirID("alumnos.raf",1);
+        //rafFile.escribirAleatorioAlumnoID(alumnos,"alumnos_2.raf",3);
         //rafFile.escribirAleatorioPorID(alumnos,"alumnos_2.raf",2);
         //List<Alumno> alumnos2 = rafFile.leerAleatorioAlumno("alumnos_2.raf");
-        //for(Alumno alumno : alumnos2){
-       //     System.out.println(alumno);
-       // }
+        for(Alumno alumno : listaAlumnos){
+            System.out.println(alumno);
+        }
     }
 }

@@ -65,15 +65,15 @@ public class FicheroCSV {
         try{
             br = new BufferedReader(new FileReader(ruta));
             String linea;
-            while((linea = br.readLine() )!= null){
+            while((linea = br.readLine()) != null){
                 String[] partesLista = linea.split(",");
-                int idAlumno = Integer.parseInt(partesLista[0]);
-                String nombreAlumno = partesLista[1];
-                double notaAlumno = Double.parseDouble(partesLista[2]);
+                int id = Integer.parseInt(partesLista[0]);
+                String nombre = partesLista[1];
+                double nota = Double.parseDouble(partesLista[2]);
 
-                lista.add(new Alumno(idAlumno, nombreAlumno, notaAlumno));
+                lista.add(new Alumno(id, nombre, nota));
             }
-        }catch (IOException e){
+        }catch(IOException e){
             System.out.println(e.getMessage());
         }finally {
             if(br != null){
@@ -91,7 +91,7 @@ public class FicheroCSV {
                 bw.write(a.getIdAlumno()+","+a.getNombreAlumno()+","+a.getNotaAlumno());
                 bw.newLine();
             }
-        }catch (IOException e){
+        }catch(IOException e){
             System.out.println(e.getMessage());
         }finally {
             if(bw != null){

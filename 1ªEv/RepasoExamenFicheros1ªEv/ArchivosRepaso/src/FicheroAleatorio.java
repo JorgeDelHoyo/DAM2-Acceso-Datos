@@ -65,19 +65,56 @@ public class FicheroAleatorio {
         }
     }
 
-    public List<Alumno> leerAleatorioAlumno(String ruta)throws IOException{
+    private final int TAMAÑO_REGISTRO = 4+(10*2)+8; // INT+CHAR+DOUBLE
+
+    public List<Alumno> leerAleatorioAlumnosPorID(String ruta, int id)throws IOException{
         List<Alumno> lista = new ArrayList<>();
         RandomAccessFile raf = null;
         try{
             raf = new RandomAccessFile(ruta,"rw");
+            long posicionAlumno = (id-1) * TAMAÑO_REGISTRO;
+            if(posicionAlumno >= raf.length()){
+                System.out.println("Id fuera de rango");
+            }
+            raf.seek(posicionAlumno);
+
+            int idAlumno = raf.readInt();
+            char[] nombreChars = new char[10];
+            for(int i = 0; i < nombreChars.length; i++){
+                nombreChars[i] = raf.readChar();
+            }
+            String nombreAlumno = new String(nombreChars);
+            double notaAlumno = raf.readDouble();
+
+            lista.add(new Alumno(idAlumno,nombreAlumno,notaAlumno));
+
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }finally {
+            if(raf != null){
+                raf.close();
+            }
+        }
+        return lista;
+    }
+
+    public List<Alumno> leerAleatorioAlumnosAPartirID(String ruta, int id)throws IOException{
+        List<Alumno> lista = new ArrayList<>();
+        RandomAccessFile raf = null;
+        try{
+            raf = new RandomAccessFile(ruta,"rw");
+            long posicionAlumno = (long) (id-1)*TAMAÑO_REGISTRO;
+            if(posicionAlumno >= raf.length()){
+                System.out.println("Id fuera de rango");
+            }
+            raf.seek(posicionAlumno);
             while(raf.getFilePointer() < raf.length()){
                 int idAlumno = raf.readInt();
-                char[] nombreAlumnoChars = new char[10];
-                for(int i = 0; i < nombreAlumnoChars.length; i++){
-                    nombreAlumnoChars[i] = raf.readChar();
+                char[] nombreCharsAlumno = new char[10];
+                for(int i = 0; i < nombreCharsAlumno.length;i++){
+                    nombreCharsAlumno[i] = raf.readChar();
                 }
-                String nombreAlumno = new String(nombreAlumnoChars);
-
+                String nombreAlumno = new String(nombreCharsAlumno);
                 double notaAlumno = raf.readDouble();
 
                 lista.add(new Alumno(idAlumno,nombreAlumno,notaAlumno));
@@ -103,7 +140,6 @@ public class FicheroAleatorio {
                 raf.writeChars(sb.toString());
                 raf.writeDouble(a.getNotaAlumno());
             }
-
         }catch (IOException e){
             System.out.println(e.getMessage());
         }finally {
@@ -113,22 +149,19 @@ public class FicheroAleatorio {
         }
     }
 
-    private final int TAMAÑO_REGISTRO = 4+(10*2)+8;
-
-    public void escribirAleatorioPorID(List<Alumno> lista,String ruta, int idAlumno)throws IOException{
+    public void escribirAleatorioAlumnoAPartirID(List<Alumno>lista, String ruta,int id)throws IOException{
         RandomAccessFile raf = null;
         try{
-
-            raf = new RandomAccessFile(ruta, "rw");
-
-            raf.setLength(0);
-
-            for(int i = idAlumno-1; i  < lista.size(); i++){
-                Alumno a = lista.get(i);
+            raf = new RandomAccessFile(ruta,"rw");
+            long posicionAlumno = (id-1)*TAMAÑO_REGISTRO;
+            if(posicionAlumno >= raf.length()){
+                System.out.println("Id fuera de rango");
+            }
+            raf.seek(posicionAlumno);
+            for (Alumno a : lista) {
                 raf.writeInt(a.getIdAlumno());
-
                 StringBuffer sb = new StringBuffer(a.getNombreAlumno());
-                sb.setLength(10);
+                sb.setLength(10); // tamaño fijo
                 raf.writeChars(sb.toString());
                 raf.writeDouble(a.getNotaAlumno());
             }
@@ -141,4 +174,29 @@ public class FicheroAleatorio {
         }
     }
 
+    public void escribirAleatorioAlumnoID(List<Alumno>lista,String ruta, int id) throws IOException {
+        RandomAccessFile raf = null;
+
+        try{
+            raf = new RandomAccessFile(ruta,"rw");
+            long posicion = (id-1)*TAMAÑO_REGISTRO;
+            raf.seek(posicion);
+            for(Alumno a : lista){
+                if(a.getIdAlumno() == id){
+                    raf.writeInt(a.getIdAlumno());
+                    StringBuffer sb = new StringBuffer(a.getNombreAlumno());
+                    sb.setLength(10);
+                    raf.writeChars(sb.toString());
+                    raf.writeDouble(a.getNotaAlumno());
+                    break;
+                }
+            }
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }finally {
+            if(raf != null){
+                raf.close();
+            }
+        }
+    }
 }

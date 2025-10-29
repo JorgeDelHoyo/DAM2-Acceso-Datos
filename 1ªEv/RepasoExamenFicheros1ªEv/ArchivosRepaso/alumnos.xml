@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<alumnos>
+  <alumno id="1">
+    <nombre>Ana Torres</nombre>
+    <nota>8.5</nota>
+  </alumno>
+  <alumno id="2">
+    <nombre>Juan Pérez</nombre>
+    <nota>6.9</nota>
+  </alumno>
+  <alumno id="3">
+    <nombre>Luis Gómez</nombre>
+    <nota>9.2</nota>
+  </alumno>
+  <alumno id="4">
+    <nombre>Marta Ruiz</nombre>
+    <nota>7.8</nota>
+  </alumno>
+  <alumno id="5">
+    <nombre>Paula Ríos</nombre>
+    <nota>5.6</nota>
+  </alumno>
+</alumnos>
