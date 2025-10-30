@@ -8,11 +8,11 @@ public class ExamenPruebaMain {
         ExamenPruebaFicheroXML xml = new ExamenPruebaFicheroXML();
         ExamenPruebaFicheroBinario binario = new ExamenPruebaFicheroBinario();
 
-        List<ExamenPrueba> lista = xml.leerXML("data/examenes.xml");
+        List<ExamenPrueba> lista = aleatorio.leerAleatorioID("data/examenes.raf",1);
         //xml.escribirXML(lista,"data/examenes.xml");
         //binario.escribirBinario(lista,"data/examenes.dat");
         //aleatorio.escribirAleatorio(lista,"data/examenes.raf");
-        //aleatorio.escribirAleatorioAPartirID(lista,"data/examenesFiltrado.raf",4);
+        //aleatorio.escribirAleatorioAPartirID(lista,"data/examenesFiltrado.raf",2);
         //aleatorio.escribirAleatorioID(lista,"data/examenesFiltrado.raf", 3);
         //List<ExamenPrueba> lista2 = aleatorio.leerAleatorio("data/examenesFiltrado.raf");
 

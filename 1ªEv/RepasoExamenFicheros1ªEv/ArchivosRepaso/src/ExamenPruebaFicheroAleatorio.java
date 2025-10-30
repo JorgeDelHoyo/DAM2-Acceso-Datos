@@ -44,17 +44,17 @@ public class ExamenPruebaFicheroAleatorio {
         RandomAccessFile raf = null;
         try{
             raf = new RandomAccessFile(ruta, "rw");
-            //for(ExamenPrueba e: lista){
-                //raf.writeInt(e.getId());
-                //StringBuffer sb = new StringBuffer(e.getNombre());
-                //sb.setLength(5);
-                //raf.writeChars(sb.toString());
-                //raf.writeFloat(e.getNotaMaxima());
-                //StringBuffer sb2 = new StringBuffer(e.getFecha());
-               // sb2.setLength(7);
-               // raf.writeChars(sb2.toString());
-                //raf.writeBoolean(e.isAprobado());
-            //}
+            for(ExamenPrueba e: lista){
+                raf.writeInt(e.getId());
+                StringBuffer sb = new StringBuffer(e.getNombre());
+                sb.setLength(5);
+                raf.writeChars(sb.toString());
+                raf.writeFloat(e.getNotaMaxima());
+                StringBuffer sb2 = new StringBuffer(e.getFecha());
+                sb2.setLength(7);
+                raf.writeChars(sb2.toString());
+                raf.writeBoolean(e.isAprobado());
+            }
         }catch (FileNotFoundException e){
             System.out.println("No se encontro el archivo");
         }finally {
