@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<examenes>
+  <examen id="1">
+    <nombre>AAAAA</nombre>
+    <notaMaxima>10.0</notaMaxima>
+    <fecha>2025-12</fecha>
+    <aprobado>true</aprobado>
+  </examen>
+  <examen id="2">
+    <nombre>BBBBB</nombre>
+    <notaMaxima>8.5</notaMaxima>
+    <fecha>2023-05</fecha>
+    <aprobado>true</aprobado>
+  </examen>
+  <examen id="3">
+    <nombre>CCCCC</nombre>
+    <notaMaxima>9.0</notaMaxima>
+    <fecha>2024-01</fecha>
+    <aprobado>true</aprobado>
+  </examen>
+  <examen id="4">
+    <nombre>DDDDD</nombre>
+    <notaMaxima>7.2</notaMaxima>
+    <fecha>2025-03</fecha>
+    <aprobado>true</aprobado>
+  </examen>
+  <examen id="5">
+    <nombre>EEEEE</nombre>
+    <notaMaxima>4.9</notaMaxima>
+    <fecha>2026-07</fecha>
+    <aprobado>false</aprobado>
+  </examen>
+</examenes>

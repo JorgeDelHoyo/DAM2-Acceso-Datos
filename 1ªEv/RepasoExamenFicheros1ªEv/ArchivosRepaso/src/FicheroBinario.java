@@ -16,11 +16,17 @@ public class FicheroBinario {
         try{
             ois = new ObjectInputStream(new FileInputStream(ruta));
             while(true){
-                Producto p = (Producto) ois.readObject();
-                listaProductos.add(p);
+                try{
+                    Producto p = (Producto) ois.readObject();
+                    listaProductos.add(p);
+                }catch (EOFException e){
+                    break;
+                }catch (ClassNotFoundException e){
+                    System.out.println("No se encontro el archivo");
+                }
             }
-        }catch (IOException  | ClassNotFoundException cnf){
-            System.out.println(cnf.getMessage());
+        }catch (FileNotFoundException e){
+            System.out.println("No se encontro el archivo");
         }finally {
             if(ois != null){
                 ois.close();
@@ -37,9 +43,9 @@ public class FicheroBinario {
      */
     public void escribirBinario(List<Producto> lista, String ruta)throws IOException{
         ObjectOutputStream oos = null;
-        try{
+        try {
             oos = new ObjectOutputStream(new FileOutputStream(ruta));
-            for(Producto p : lista){
+            for (Producto p : lista) {
                 oos.writeObject(p);
             }
         }catch (IOException e){

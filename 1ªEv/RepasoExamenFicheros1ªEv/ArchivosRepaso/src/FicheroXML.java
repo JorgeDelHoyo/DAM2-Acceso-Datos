@@ -1,12 +1,10 @@
 import org.w3c.dom.*;
 
-import javax.xml.crypto.dsig.Transform;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +61,7 @@ public class FicheroXML {
      * @throws Exception
      */
     public List<Producto> leerXML(String ruta) throws Exception{
-        List<Producto> lista = new ArrayList<Producto>();
+        List<Producto> lista = new ArrayList<>();
 
         // Comprobamos que el archivo existe
         File archivo = new File(ruta);
@@ -103,22 +101,26 @@ public class FicheroXML {
 
     public void escribirXMLAlumno(List<Alumno>lista, String ruta)throws Exception{
         try{
+            //Codigo necesario
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.newDocument();
 
+            //Elemento raiz <alumnos>...</alumnos>
             Element root = doc.createElement("alumnos");
             doc.appendChild(root);
 
+            //Elementos dentro de <alumnos>(...)</alumnos>
             for(Alumno a : lista){
+                //Dentro de alumnos se crea un alumno
                 Element alumnoElement = doc.createElement("alumno");
-
+                //Se añade un atributo al elemento alumno <alumno id=">
                 alumnoElement.setAttribute("id",String.valueOf(a.getIdAlumno()));
-
+                //Se crea un elemnto <nombre>(...)</nombre> dentro de alumno
                 Element nombre = doc.createElement("nombre");
                 nombre.setTextContent(a.getNombreAlumno());
                 alumnoElement.appendChild(nombre);
-
+                // Se crea un elemento <nota>(...)</nota> dentro de alumno
                 Element nota = doc.createElement("nota");
                 nota.setTextContent(String.valueOf(a.getNotaAlumno()));
                 alumnoElement.appendChild(nota);
@@ -145,16 +147,18 @@ public class FicheroXML {
     public List<Alumno> leerXMLAlumno(String ruta)throws Exception{
         List<Alumno> lista = new ArrayList<>();
         try{
+            // Necesario
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File(ruta));
             doc.getDocumentElement().normalize();
 
+            // Cada <alumno> en <alumnos> es un nodo
             NodeList nodos = doc.getElementsByTagName("alumno");
-
+            // Recorre todos los nodos <alumno>
             for(int i = 0; i < nodos.getLength(); i++){
                 Node nodo = nodos.item(i);
-                if(nodo.getNodeType() == Node.ELEMENT_NODE){
+                if(nodo.getNodeType() == Node.ELEMENT_NODE){ // Verifica que <alumno> es un elemento nodo
                     Element elem = (Element) nodo;
-                    int id = Integer.parseInt(elem.getAttribute("id"));
+                    int id = Integer.parseInt(elem.getAttribute("id")); // Se lee el atributo
                     String nombre = elem.getElementsByTagName("nombre").item(0).getTextContent();
                     double nota = Double.parseDouble(elem.getElementsByTagName("nota").item(0).getTextContent());
 

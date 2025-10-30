@@ -51,7 +51,7 @@ public class FicheroCSV {
                 bw.newLine();
             }
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }finally {
             if(bw != null){
                 bw.close();
