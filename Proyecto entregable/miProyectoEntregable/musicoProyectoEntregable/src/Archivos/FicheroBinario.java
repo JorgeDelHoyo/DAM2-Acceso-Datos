@@ -1,63 +1,96 @@
 package Archivos;
 
-import Objetos.Musico;
 import Interfaces.MusicoRepositorio;
+import Objetos.Musico;
 
 import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-/**
- * Clase FicheroBinario
- * Implementa la interfaz MusicoRepositorio para guardar y cargar músicos en formato binario.
- * Cada músico puede tener varias bandas
- */
 public class FicheroBinario implements MusicoRepositorio {
 
-    // Ruta del archivo binario donde se guardarán o cargarán los musicos
     private final Path ruta;
 
-    /**
-     * Constructor que recibe la ruta del archivo y la convierte a Path
-     * @param rutaArchivo
-     */
     public FicheroBinario(String rutaArchivo) {
         this.ruta = Paths.get(rutaArchivo);
     }
 
-    @Override
-    public List<Musico> cargar() throws IOException, ClassNotFoundException {
-        // Si el archivo no existe, devuelve una lista vacía
-        if (!Files.exists(ruta)) return new ArrayList<>();
-
-        /**
-         * Lee la lista completa de musicos desde el archivo binario
-         * Incluye todas las bandas porque Musico y Banda implementan Serializable
-         */
+    private List<Musico> leerDelFichero() throws IOException, ClassNotFoundException {
+        if (!Files.exists(ruta)) {
+            return new ArrayList<>();
+        }
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(ruta))) {
             return (List<Musico>) ois.readObject();
         }
     }
 
-    @Override
-    public void guardar(List<Musico> musicos) throws IOException {
-        // Asegura que la carpeta del archivo exista
-        Files.createDirectories(ruta.getParent() == null ? Paths.get(".") : ruta.getParent());
-
-        /**
-         * Escribe toda la lista de musicos en un archivo binario de forma serializada
-         * se encarga de guardar la estructura completa de cada Musico y sus bandas
-         */
+    private void escribirEnFichero(List<Musico> musicos) throws IOException {
+        Files.createDirectories(ruta.getParent());
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(ruta))) {
             oos.writeObject(musicos);
         }
     }
 
-    /**
-     * Devuelve la ruta del archivo binario
-     * @return
-     */
     @Override
-    public String getRuta() { return ruta.toString(); }
+    public List<Musico> obtenerTodos() throws SQLException {
+        try {
+            return leerDelFichero();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new SQLException("Error de E/S al leer el fichero binario.", e);
+        }
+    }
 
+    @Override
+    public Optional<Musico> obtenerPorId(int id) throws SQLException {
+        return obtenerTodos().stream().filter(m -> m.getIdMusico() == id).findFirst();
+    }
+
+    @Override
+    public void guardar(Musico musico) throws SQLException {
+        try {
+            List<Musico> musicos = leerDelFichero();
+            int maxId = musicos.stream().mapToInt(Musico::getIdMusico).max().orElse(0);
+            musico.setIdMusico(maxId + 1);
+            musicos.add(musico);
+            escribirEnFichero(musicos);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new SQLException("Error de E/S al guardar en el fichero binario.", e);
+        }
+    }
+
+    @Override
+    public void actualizar(Musico musico) throws SQLException {
+        try {
+            List<Musico> musicos = leerDelFichero();
+            musicos.removeIf(m -> m.getIdMusico() == musico.getIdMusico());
+            musicos.add(musico);
+            escribirEnFichero(musicos);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new SQLException("Error de E/S al actualizar el fichero binario.", e);
+        }
+    }
+
+    @Override
+    public void eliminar(int id) throws SQLException {
+        try {
+            List<Musico> musicos = leerDelFichero();
+            musicos.removeIf(m -> m.getIdMusico() == id);
+            escribirEnFichero(musicos);
+        } catch (IOException | ClassNotFoundException e) {
+            throw new SQLException("Error de E/S al eliminar del fichero binario.", e);
+        }
+    }
+
+    @Override
+    public List<Musico> buscarPorBanda(int idBanda) throws SQLException {
+        return obtenerTodos().stream()
+                .filter(m -> m.getBandas().stream().anyMatch(b -> b.getIdBanda() == idBanda))
+                .collect(Collectors.toList());
+    }
 }

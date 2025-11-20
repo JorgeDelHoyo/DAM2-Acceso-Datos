@@ -1,98 +1,62 @@
 package ConfiguracionMusico;
 
-import Objetos.Musico;
 import Interfaces.MusicoRepositorio;
-import Archivos.*;
+import Archivos.FicheroBinario;
+import Archivos.FicheroCSV;
+import Archivos.FicheroXML;
+import repository.MusicoRepositorioJDBC;
 
 import java.io.FileInputStream;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.Properties;
 
+/**
+ * Fábrica de Repositorios.
+ * Lee la configuración y proporciona la implementación de persistencia adecuada.
+ */
 public class MusicoConfig {
 
-    // 'repo' es la implementación concreta de persistencia (CSV, XML o binario)
-    private MusicoRepositorio repo;
-    // Lista de músicos cargada en memoria durante la ejecución
-    private List<Musico> memoria = new ArrayList<>();
+    private final MusicoRepositorio repositorio;
 
-    public MusicoConfig(String tipoParametro, String rutaParametro) {
+    public MusicoConfig() {
         Properties p = new Properties();
+        String tipo = "jdbc"; // Valor por defecto
+        String ruta = "data/musicos.dat"; // Ruta por defecto para ficheros
+
         try (FileInputStream fis = new FileInputStream("Configuracion/config.properties")) {
             p.load(fis);
+            tipo = p.getProperty("persistence.type", "jdbc").toLowerCase();
+            ruta = p.getProperty("persistence.path", "data/musicos.dat");
         } catch (Exception e) {
-            System.out.println("No se encontró config.properties. Usando CSV por defecto.");
+            System.out.println("ADVERTENCIA: No se encontró config.properties. Usando la implementación JDBC por defecto.");
         }
 
-        // Usa los parámetros si se pasaron, sino busca en propiedades, sino usa valores por defecto
-        String tipo = (tipoParametro != null) ? tipoParametro :
-                p.getProperty("persistence", "csv").toLowerCase();
-
-        String ruta = (rutaParametro != null) ? rutaParametro :
-                p.getProperty("ruta", "data/musicos.csv");
-
+        // Selecciona la implementación del repositorio según la configuración
         switch (tipo) {
-            case "xml" -> repo = new FicheroXML(ruta);
-            case "binario" -> repo = new FicheroBinario(ruta);
-            default -> repo = new FicheroCSV(ruta);
+            case "binario":
+                System.out.println("Usando repositorio de Fichero Binario.");
+                this.repositorio = new FicheroBinario(ruta);
+                break;
+            case "csv":
+                System.out.println("Usando repositorio de Fichero CSV.");
+                this.repositorio = new FicheroCSV(ruta);
+                break;
+            case "xml":
+                System.out.println("Usando repositorio de Fichero XML.");
+                this.repositorio = new FicheroXML(ruta);
+                break;
+            case "jdbc":
+            default:
+                System.out.println("Usando repositorio JDBC.");
+                this.repositorio = new MusicoRepositorioJDBC();
+                break;
         }
     }
 
     /**
-     * Carga la lista de músicos desde el repositorio y la guarda en memoria
-     * @throws Exception
+     * Devuelve la instancia del repositorio configurado.
+     * @return una implementación de MusicoRepositorio.
      */
-    public void cargar() throws Exception {
-        memoria = repo.cargar();
-    }
-
-    /**
-     * Guarda la lista de músicos en el repositorio configurado
-     * @throws Exception
-     */
-    public void guardar() throws Exception {
-        repo.guardar(memoria);
-    }
-
-    /**
-     * Devuelve la lista de músicos en memoria
-     * @return
-     */
-    public List<Musico> listar() {
-        return memoria;
-    }
-
-    /**
-     * Añade un músico, reemplazando cualquier músico con el mismo ID
-     * @param m
-     */
-    public void agregar(Musico m) {
-        memoria.removeIf(x -> x.getIdMusico() == m.getIdMusico());
-        memoria.add(m);
-    }
-
-    /**
-     * Busca un músico por su ID en la lista de memoria
-     * @param id
-     * @return Devuelve null si no lo encuentra
-     */
-    public Musico buscar(int id) {
-        return memoria.stream().filter(m -> m.getIdMusico() == id).findFirst().orElse(null);
-    }
-
-    /**
-     * Elimina un músico por su ID
-     * @param id
-     * @return devuelve true si se eliminó, false si no existía
-     */
-    public boolean eliminar(int id) {
-        return memoria.removeIf(m -> m.getIdMusico() == id);
-    }
-
-    /**
-     * Devuelve la ruta del archivo o repositorio que se está usando
-     * @return
-     */
-    public String getRuta() {
-        return repo.getRuta();
+    public MusicoRepositorio getRepositorio() {
+        return this.repositorio;
     }
 }
