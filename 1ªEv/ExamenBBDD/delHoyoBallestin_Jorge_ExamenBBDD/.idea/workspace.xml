@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b209a0-e843-4b35-afb5-614e051b0774" name="Changes" comment="" />
+    <list default="true" id="3f30649a-2451-4930-8df5-ab2cd04a67f1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/.idea/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/paises.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/paises.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/paises.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/src/GestorPaises.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/src/Pais.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/ExamenUD1_ficheros_enunciado/src/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/out/production/ExamenUD1_ficheros_enunciado/GestorPaises.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/out/production/ExamenUD1_ficheros_enunciado/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/out/production/ExamenUD1_ficheros_enunciado/Pais.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/ExamenUD1_ficheros_enunciado/out/production/ExamenUD1_ficheros_enunciado/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Examen/delHoyoBallestinJorge.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExamenUD2-alumnos/.idea/workspace.xml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,39 +38,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
-  <component name="ProjectId" id="363Y0g4AACzJ3afMOq2QBUzXWeM" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="363ieS1zqetLWbZOcrdKRzCSqiH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;proyectoModificado&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/delhoyoballestin23/Desktop/ExamenUD2-alumnos&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -70,18 +81,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="52b209a0-e843-4b35-afb5-614e051b0774" name="Changes" comment="" />
-      <created>1764236500171</created>
+      <changelist id="3f30649a-2451-4930-8df5-ab2cd04a67f1" name="Changes" comment="" />
+      <created>1764241751905</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1764236500171</updated>
-      <workItem from="1764236501246" duration="4579000" />
-      <workItem from="1764241109750" duration="53000" />
-      <workItem from="1764241186329" duration="5000" />
-      <workItem from="1764241230634" duration="12000" />
-      <workItem from="1764241285072" duration="13000" />
-      <workItem from="1764241411844" duration="14000" />
-      <workItem from="1764241464902" duration="7000" />
+      <updated>1764241751905</updated>
+      <workItem from="1764241752821" duration="15000" />
     </task>
     <servers />
   </component>
