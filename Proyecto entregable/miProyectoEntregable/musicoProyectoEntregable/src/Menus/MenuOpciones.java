@@ -1,14 +1,14 @@
 package Menus;
 
 import ConfiguracionMusico.MusicoConfig;
-import Objetos.Musico;
 import Objetos.Banda;
-import Interfaces.MusicoRepositorio;
+import Objetos.Musico;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
 
-public class MenuOpciones{
+public class MenuOpciones {
 
     private final MusicoConfig service;
     private final Scanner sc = new Scanner(System.in);
@@ -17,113 +17,104 @@ public class MenuOpciones{
         this.service = service;
     }
 
-    /**
-     * Metodo para mostrar y realizar un menu interactivo
-     */
     public void mostrarMenu() {
         boolean salir = false;
         while (!salir) {
-            System.out.println("\n=== MENÚ MÚSICOS ===");
+            System.out.println("\n=== MENÚ MÚSICOS Y BANDAS ===");
             System.out.println("Repositorio: " + service.getRuta());
             System.out.println("""
-                1. Cargar músicos
-                2. Listar músicos
-                3. Añadir músico
-                4. Añadir banda a músico
-                5. Eliminar músico
-                6. Guardar músicos
+                1. Listar músicos
+                2. Añadir músico
+                3. Añadir banda a músico
+                4. Eliminar músico
+                5. Buscar músico por ID
                 0. Salir""");
             System.out.print("Opción: ");
             String op = sc.nextLine();
 
             try {
                 switch (op) {
-                    case "1" -> {
-                        service.cargar(); // carga la lista en memoria
-                        System.out.println("Datos cargados.");
-                    }
-                    case "2" -> listar();
-                    case "3" -> crearMusico();
-                    case "4" -> agregarBanda();
-                    case "5" -> eliminar();
-                    case "6" -> {
-                        service.guardar(); // guarda la lista en memoria
-                        System.out.println("Datos guardados.");
-                    }
+                    case "1" -> listar();
+                    case "2" -> crearMusico();
+                    case "3" -> agregarBanda();
+                    case "4" -> eliminar();
+                    case "5" -> buscar();
                     case "0" -> salir = true;
                     default -> System.out.println("Opción no válida.");
                 }
             } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                System.err.println("Error: " + e.getMessage());
+                e.printStackTrace(); // Útil para depuración
             }
         }
     }
 
-    /**
-     * Metodo para listar musicos
-     */
-    private void listar() {
-        List<Musico> lista = service.listar();
-        if (lista.isEmpty()) System.out.println("No hay músicos.");
-        else lista.forEach(System.out::println);
-    }
-
-    /**
-     * Metodo para crear un musico
-     */
-    private void crearMusico() {
-        try {
-            System.out.print("ID: ");
-            int id = Integer.parseInt(sc.nextLine());
-            System.out.print("Nombre: ");
-            String nombre = sc.nextLine();
-            System.out.print("Instrumento: ");
-            String instrumento = sc.nextLine();
-
-            service.agregar(new Musico(id, nombre, instrumento));
-            System.out.println("Músico agregado.");
-        } catch (Exception e) {
-            System.out.println("Formato incorrecto.");
+    private void listar() throws Exception {
+        List<Musico> lista = service.listarTodos();
+        if (lista.isEmpty()) {
+            System.out.println("No hay músicos registrados.");
+        } else {
+            lista.forEach(System.out::println);
         }
     }
 
-    /**
-     * Metodo para agregar una banda a un musico
-     */
-    private void agregarBanda() {
-        try {
-            System.out.print("ID del músico: ");
-            int id = Integer.parseInt(sc.nextLine());
-            Musico m = service.buscar(id);
-            if (m == null) {
-                System.out.println("Músico no encontrado.");
-                return;
-            }
+    private void crearMusico() throws Exception {
+        System.out.print("Nombre del músico: ");
+        String nombre = sc.nextLine();
+        System.out.print("Instrumento: ");
+        String instrumento = sc.nextLine();
 
-            System.out.print("ID de la banda: ");
-            int idBanda = Integer.parseInt(sc.nextLine());
-            System.out.print("Nombre de la banda: ");
-            String nombreBanda = sc.nextLine();
+        Musico nuevoMusico = new Musico(0, nombre, instrumento);
+        Musico musicoGuardado = service.agregar(nuevoMusico);
+        
+        System.out.println("Músico agregado con ID: " + musicoGuardado.getIdMusico());
+    }
 
-            m.getBandas().add(new Banda(idBanda, nombreBanda));
-            System.out.println("Banda añadida al músico.");
-        } catch (Exception e) {
-            System.out.println("Formato incorrecto.");
+    private void buscar() throws Exception {
+        System.out.print("ID del músico a buscar: ");
+        int id = Integer.parseInt(sc.nextLine());
+        Optional<Musico> musicoOpt = service.buscar(id);
+
+        if (musicoOpt.isPresent()) {
+            System.out.println("Músico encontrado:");
+            System.out.println(musicoOpt.get());
+        } else {
+            System.out.println("Músico con ID " + id + " no encontrado.");
         }
     }
 
-    /**
-     * Metodo para eliminar un musico
-     */
-    private void eliminar() {
-        try {
-            System.out.print("ID del músico a eliminar: ");
-            int id = Integer.parseInt(sc.nextLine());
-            boolean removed = service.eliminar(id);
-            System.out.println(removed ? "Músico eliminado." : "Músico no encontrado.");
-        } catch (Exception e) {
-            System.out.println("Formato incorrecto.");
-        }
+    private void eliminar() throws Exception {
+        System.out.print("ID del músico a eliminar: ");
+        int id = Integer.parseInt(sc.nextLine());
+        boolean removed = service.eliminar(id);
+        System.out.println(removed ? "Músico eliminado." : "Músico no encontrado.");
     }
 
+    private void agregarBanda() throws Exception {
+        System.out.print("ID del músico al que quieres añadir una banda: ");
+        int idMusico = Integer.parseInt(sc.nextLine());
+        
+        Optional<Musico> musicoOpt = service.buscar(idMusico);
+        if (musicoOpt.isEmpty()) {
+            System.out.println("Músico no encontrado.");
+            return;
+        }
+        
+        Musico musico = musicoOpt.get();
+        System.out.println("Músico seleccionado: " + musico.getNombre());
+        
+        System.out.print("Nombre de la nueva banda: ");
+        String nombreBanda = sc.nextLine();
+        
+        // Creamos un nuevo objeto Banda. El ID se autogenerará en la BD.
+        Banda nuevaBanda = new Banda(0, nombreBanda);
+        
+        // Añadimos la nueva banda a la lista de bandas del músico
+        musico.getBandas().add(nuevaBanda);
+        
+        // Guardamos los cambios en el músico
+        service.modificar(musico);
+        
+        System.out.println("Banda '" + nombreBanda + "' añadida al músico '" + musico.getNombre() + "'.");
+    }
 }

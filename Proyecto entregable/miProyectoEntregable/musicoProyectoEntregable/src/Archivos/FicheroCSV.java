@@ -1,112 +1,101 @@
 package Archivos;
 
-import Objetos.Musico;
-import Objetos.Banda;
 import Interfaces.MusicoRepositorio;
+import Objetos.Musico;
 
 import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-/**
- * Clase FicheroCSV
- * Implementa la interfaz MusicoRepositorio para guardar y cargar músicos en formato CSV.
- * Cada músico puede tener varias bandas, separadas por "|" en el archivo.
- */
 public class FicheroCSV implements MusicoRepositorio {
 
-    // Ruta del archivo CSV donde se guardarán o cargarán los músicos
-    private final Path ruta;
+    private final String ruta;
+    private static final String SEPARATOR = ",";
 
-    /**
-     * Constructor que recibe la ruta del archivo CSV
-     * @param rutaArchivo ruta del archivo CSV
-     */
-    public FicheroCSV(String rutaArchivo) {
-        this.ruta = Paths.get(rutaArchivo);
+    public FicheroCSV(String ruta) {
+        this.ruta = ruta;
     }
 
-    /**
-     * Metodo para cargar la lista de músicos desde un archivo CSV
-     * @return lista de músicos con sus bandas
-     * @throws IOException si ocurre un error al leer el archivo
-     */
     @Override
     public List<Musico> cargar() throws IOException {
-        List<Musico> lista = new ArrayList<>();
-
-        // Si el archivo no existe, devuelve lista vacía
-        if (!Files.exists(ruta)) return lista;
-
-        // Abrir el archivo para lectura
-        try (BufferedReader br = Files.newBufferedReader(ruta)) {
+        List<Musico> musicos = new ArrayList<>();
+        File file = new File(ruta);
+        if (!file.exists()) {
+            // Si el archivo no existe, devuelve una lista vacía.
+            return musicos;
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // Cada línea tiene el formato:
-                // idMusico,nombre,instrumento,banda1|banda2|...
-
-                // Separa la línea en máximo 4 partes
-                String[] partes = line.split(",", 4);
-
-                // Crear objeto Musico con id, nombre e instrumento
-                int id = Integer.parseInt(partes[0]);
-                String nombre = partes[1];
-                String instrumento = partes[2];
-
-                Musico m = new Musico(id, nombre, instrumento);
-
-                // Si hay bandas, se separan por "|"
-                if (partes.length == 4 && !partes[3].isEmpty()) {
-                    String[] bandas = partes[3].split("\\|");
-                    for (String b : bandas) {
-                        m.getBandas().add(new Banda(0, b)); // idBanda desconocido en CSV
-                    }
+                String[] values = line.split(SEPARATOR);
+                if (values.length >= 3) {
+                    musicos.add(new Musico(Integer.parseInt(values[0]), values[1], values[2]));
                 }
-                lista.add(m); // Añadir el músico a la lista
             }
         }
-        return lista; // Devuelve la lista completa de músicos
+        return musicos;
     }
 
-    /**
-     * Metodo para guardar la lista de músicos en un archivo CSV
-     * @param lista lista de músicos con sus bandas
-     * @throws IOException si ocurre un error al escribir el archivo
-     */
     @Override
-    public void guardar(List<Musico> lista) throws IOException {
-        // Crear directorios si no existen
-        Files.createDirectories(ruta.getParent() == null ? Paths.get(".") : ruta.getParent());
-
-        // Abrir el archivo para escritura
-        try (BufferedWriter bw = Files.newBufferedWriter(ruta)) {
-            for (Musico m : lista) {
-                StringBuilder sb = new StringBuilder();
-
-                // Agregar id, nombre e instrumento separados por coma
-                sb.append(m.getIdMusico()).append(",");
-                sb.append(m.getNombre()).append(",");
-                sb.append(m.getInstrumento()).append(",");
-
-                // Agregar las bandas separadas por "|"
-                for (int i = 0; i < m.getBandas().size(); i++) {
-                    sb.append(m.getBandas().get(i).getNombreBanda());
-                    if (i < m.getBandas().size() - 1) sb.append("|");
-                }
-
-                // Escribir la línea en el archivo
-                bw.write(sb.toString());
+    public void guardar(List<Musico> musicos) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ruta))) {
+            for (Musico musico : musicos) {
+                String line = musico.getIdMusico() + SEPARATOR + musico.getNombre() + SEPARATOR + musico.getInstrumento();
+                bw.write(line);
                 bw.newLine();
             }
         }
     }
 
-    /**
-     * Devuelve la ruta del archivo CSV
-     * @return ruta como String
-     */
+    @Override
+    public Optional<Musico> buscarPorId(int id) throws Exception {
+        return cargar().stream()
+                .filter(m -> m.getIdMusico() == id)
+                .findFirst();
+    }
+
+    @Override
+    public Musico añadir(Musico musico) throws Exception {
+        List<Musico> musicos = cargar();
+        // Asignar un nuevo ID si es necesario (simulando autoincremento)
+        if (musico.getIdMusico() == 0) {
+            int maxId = musicos.stream().mapToInt(Musico::getIdMusico).max().orElse(0);
+            musico.setIdMusico(maxId + 1);
+        }
+        musicos.add(musico);
+        guardar(musicos);
+        return musico;
+    }
+
+    @Override
+    public boolean modificar(Musico musico) throws Exception {
+        List<Musico> musicos = cargar();
+        Optional<Musico> musicoExistente = musicos.stream()
+                .filter(m -> m.getIdMusico() == musico.getIdMusico())
+                .findFirst();
+
+        if (musicoExistente.isPresent()) {
+            musicos.remove(musicoExistente.get());
+            musicos.add(musico);
+            guardar(musicos);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean eliminar(int id) throws Exception {
+        List<Musico> musicos = cargar();
+        boolean removed = musicos.removeIf(m -> m.getIdMusico() == id);
+        if (removed) {
+            guardar(musicos);
+        }
+        return removed;
+    }
+
     @Override
     public String getRuta() {
-        return ruta.toString();
+        return this.ruta;
     }
 }

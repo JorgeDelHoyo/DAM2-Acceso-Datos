@@ -1,9 +1,5 @@
-
 import ConfiguracionMusico.MusicoConfig;
 import Menus.MenuOpciones;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,10 +8,12 @@ public class Main {
         System.out.println("=====================================");
 
         try {
-            // Inicializa la configuración de músicos (selecciona repositorio automáticamente)
-            MusicoConfig config = new MusicoConfig("dat", "data/musicos.dat");
+            // Inicializa la configuración de músicos.
+            // La clase MusicoConfig ahora lee la configuración desde 'config.properties'
+            // y selecciona el repositorio (JDBC, XML, etc.) automáticamente.
+            MusicoConfig config = new MusicoConfig();
 
-            System.out.println("Repositorio cargado: " + config.getRuta());
+            System.out.println("Repositorio seleccionado: " + config.getRuta());
 
             // Lanza el menú de opciones
             MenuOpciones menu = new MenuOpciones(config);
@@ -23,7 +21,7 @@ public class Main {
 
             System.out.println("\nGracias por usar el Gestor de Músicos. ¡Hasta luego!");
         } catch (Exception e) {
-            System.out.println("Error al iniciar la aplicación: " + e.getMessage());
+            System.err.println("Error fatal al iniciar la aplicación: " + e.getMessage());
             e.printStackTrace();
         }
     }
