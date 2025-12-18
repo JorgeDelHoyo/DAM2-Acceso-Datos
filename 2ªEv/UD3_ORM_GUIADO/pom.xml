@@ -9,20 +9,20 @@
     <version>1.0-SNAPSHOT</version>
 
 
+
+    <!-- Hibernate -->
     <dependencies>
-
-        <!-- Hibernate -->
+        <!-- <type>pom</type> version 7 borrar esta linea -->
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>7.1.11.Final</version>
+            <version>6.6.39.Final</version>
         </dependency>
-
-        <!-- Conector jdbc con MySQL -->
+        <!-- Driver MariaDB -->
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>9.5.0</version>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.5.1</version>
         </dependency>
     </dependencies>
 
