@@ -28,7 +28,7 @@ public class Editorial {
 
     public void addLibro(Libro libro){
         libros.add(libro);
-        libro.setEditorial(null);
+        libro.setEditorial(this);
     }
 
     public void removeLibro(Libro libro){
