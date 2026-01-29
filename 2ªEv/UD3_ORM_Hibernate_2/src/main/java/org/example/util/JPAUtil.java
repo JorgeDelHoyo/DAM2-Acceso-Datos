@@ -16,7 +16,7 @@ public class JPAUtil {
      * EntityManagerFactory compartido
      */
     private static final EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("entrega_orm_hibernate");
+            Persistence.createEntityManagerFactory("entrega_orm_hibernate_2");
 
     /**
      * Devuelve un EntityManager nuevo
