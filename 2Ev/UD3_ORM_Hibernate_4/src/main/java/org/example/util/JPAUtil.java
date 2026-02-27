@@ -4,33 +4,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-/**
- * Clase de utilidad para gestionar el EntityManagerFactory.
- *
- * - Debe existir UNA sola instancia de EntityManagerFactory por aplicación
- * - Cada operación creará su propio EntityManager
- */
 public class JPAUtil {
+    // 1. Quitamos el final y la inicialización directa
+    private static EntityManagerFactory emf;
 
-    /**
-     * EntityManagerFactory compartido
-     */
-    private static final EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("entrega_orm_hibernate_4");
-
-    /**
-     * Devuelve un EntityManager nuevo
-     */
     public static EntityManager getEntityManager() {
+        // 2. Solo conectamos cuando se pide
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("entrega_orm_hibernate_4");
+        }
         return emf.createEntityManager();
     }
 
-    /**
-     * Cierra correctamente el EntityManagerFactory
-     * Este metodo se llamará al final del main cuando el programa ha terminado
-     */
     public static void shutdown() {
-        if(emf.isOpen()){
+        if(emf != null && emf.isOpen()){
             emf.close();
         }
     }

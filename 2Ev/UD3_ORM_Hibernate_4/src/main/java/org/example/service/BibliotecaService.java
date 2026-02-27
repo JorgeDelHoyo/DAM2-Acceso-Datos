@@ -155,7 +155,9 @@ public class BibliotecaService {
             autorRepository.persist(em, a);
             tx.commit();
             return a.getId();
-        } catch (Exception e) { if (tx.isActive()) tx.rollback(); return null; } finally { em.close(); }
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback(); return null;
+        } finally { em.close(); }
     }
 
     public Long crearEditorial(String nombre, String pais) {
@@ -167,6 +169,8 @@ public class BibliotecaService {
             editorialRepository.persist(em, e);
             tx.commit();
             return e.getId();
-        } catch (Exception ex) { if (tx.isActive()) tx.rollback(); return null; } finally { em.close(); }
+        } catch (Exception ex) {
+            if (tx.isActive()) tx.rollback(); return null;
+        } finally { em.close(); }
     }
 }
